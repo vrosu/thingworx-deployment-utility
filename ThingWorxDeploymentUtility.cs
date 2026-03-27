@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Security.Policy;
 using System.Text;
@@ -42,14 +43,34 @@ namespace ThingWorxDeploymentUtility
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            setButtonStateGrid1();
+            //Pickup the previous application version values in the case of an upgrade of the application.
+            if (!Properties.Settings.Default.Upgraded)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.Upgraded = true;
+                Properties.Settings.Default.Save();
+            }
+
+            //load the initial values
             loadEnvironmentsList();
+
+            //display the application version
+            var version = Assembly
+                .GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                .InformationalVersion;
+            lb_Version.Text = $"Version: {version}";
+
         }
 
         private void btn_Settings_Click(object sender, EventArgs e)
         {
             Settings frm_Settings = new Settings();
-            frm_Settings.ShowDialog();
             frm_Settings.FormClosed += (s, e) => { loadEnvironmentsList(); };
+            frm_Settings.ShowDialog();
+
+
         }
 
 
@@ -179,7 +200,11 @@ namespace ThingWorxDeploymentUtility
 
             }
             dg.Enabled = true;
-            dg.Sort(dg.Columns[1],ListSortDirection.Descending);
+            dg.Sort(dg.Columns[1], ListSortDirection.Descending);
+
+            dg.ClearSelection();
+            dg.CurrentCell = null;
+
         }
 
         private JsonNode getProjects(string str_Environment, decimal dec_Port, string str_AppKey)
@@ -574,6 +599,17 @@ namespace ThingWorxDeploymentUtility
             frm_CreateExtensionPopup.ShowDialog();
         }
 
+        private void dgv_EnvironmentFiles1_SelectionChanged(object sender, EventArgs e)
+        {
+            setButtonStateGrid1();
+        }
+
+        private void setButtonStateGrid1()
+        {
+            btn_SaveAsExtension.Enabled = dgv_EnvironmentFiles1.SelectedRows.Count > 0;
+            btn_DownloadEnvironment1.Enabled = dgv_EnvironmentFiles1.SelectedRows.Count > 0;
+            btn_DeleteFileEnvironment1.Enabled = dgv_EnvironmentFiles1.SelectedRows.Count > 0;
+        }
        
     }
 }

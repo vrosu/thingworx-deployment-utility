@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace ThingWorxDeploymentUtility
@@ -105,6 +106,25 @@ namespace ThingWorxDeploymentUtility
             
         }
 
+
+        public static string Sanitize(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+
+            return input
+                .Trim()
+                // Invisible / problematic Unicode chars
+                .Replace("\u00A0", " ")   // non‑breaking space
+                .Replace("\u200B", "")    // zero‑width space
+                .Replace("\u200C", "")
+                .Replace("\u200D", "")
+                .Replace("\uFEFF", "")    // BOM / zero‑width no‑break space
+                                          // Normalize Unicode (fixes smart quotes, compatibility chars)
+                .Normalize(NormalizationForm.FormKC);
+        }
+
+
         private void btn_Save_Click(object sender, EventArgs e)
         {
 
@@ -117,12 +137,12 @@ namespace ThingWorxDeploymentUtility
             if (result == DialogResult.Yes)
             {
 
-                String str_EnvironmentURL = tb_EnvironmentURL.Text;
-                String str_AppKey = tb_AppKey.Text;
+                String str_EnvironmentURL = Sanitize(tb_EnvironmentURL.Text);
+                String str_AppKey = Sanitize(tb_AppKey.Text);
                 Decimal dec_Port = nm_Port.Value;
-                string str_FileRepository = tb_FileRepository.Text;
-                string str_FileRepositoryPath = tb_FileRepositoryPackagingPath.Text;
-                string str_FileRepositoryReceivingPath = tb_FileRepositoryReceivingPath.Text;
+                string str_FileRepository = Sanitize(tb_FileRepository.Text);
+                string str_FileRepositoryPath = Sanitize(tb_FileRepositoryPackagingPath.Text);
+                string str_FileRepositoryReceivingPath = Sanitize(tb_FileRepositoryReceivingPath.Text);
                 StringCollection lst_Environments = Properties.Settings.Default.EnvironmentList;
               
                 JsonNode json_CurrentEnvironment = JsonNode.Parse(lst_Environments[this.lst_Environments.SelectedIndex]);

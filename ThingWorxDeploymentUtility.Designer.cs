@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             btn_Settings = new Button();
             cb_Environment1 = new ComboBox();
             lb_Environment1 = new Label();
@@ -64,6 +64,7 @@
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             btn_TransferFile = new Button();
             tooltip = new ToolTip(components);
+            lb_Version = new Label();
             ((System.ComponentModel.ISupportInitialize)dgv_EnvironmentFiles1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -121,7 +122,6 @@
             // 
             dgv_EnvironmentFiles1.AllowUserToAddRows = false;
             dgv_EnvironmentFiles1.AllowUserToDeleteRows = false;
-            dgv_EnvironmentFiles1.AllowUserToOrderColumns = true;
             dgv_EnvironmentFiles1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_EnvironmentFiles1.Columns.AddRange(new DataGridViewColumn[] { FileName, LastModifiedTimestamp, Size, FilePath });
             dgv_EnvironmentFiles1.Location = new Point(13, 149);
@@ -133,13 +133,14 @@
             dgv_EnvironmentFiles1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv_EnvironmentFiles1.Size = new Size(445, 254);
             dgv_EnvironmentFiles1.TabIndex = 6;
+            dgv_EnvironmentFiles1.SelectionChanged += dgv_EnvironmentFiles1_SelectionChanged;
             // 
             // FileName
             // 
             FileName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            FileName.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            FileName.DefaultCellStyle = dataGridViewCellStyle1;
             FileName.HeaderText = "File name:";
             FileName.MinimumWidth = 6;
             FileName.Name = "FileName";
@@ -147,9 +148,9 @@
             // 
             // LastModifiedTimestamp
             // 
-            dataGridViewCellStyle8.Format = "dd-MM-yyyy HH:mm:ss";
-            dataGridViewCellStyle8.NullValue = null;
-            LastModifiedTimestamp.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Format = "dd-MM-yyyy HH:mm:ss";
+            dataGridViewCellStyle2.NullValue = null;
+            LastModifiedTimestamp.DefaultCellStyle = dataGridViewCellStyle2;
             LastModifiedTimestamp.HeaderText = "Last modified:";
             LastModifiedTimestamp.MinimumWidth = 6;
             LastModifiedTimestamp.Name = "LastModifiedTimestamp";
@@ -236,11 +237,12 @@
             // 
             btn_SaveAsExtension.BackgroundImage = Properties.Resources.SaveAsExtension_Transparent;
             btn_SaveAsExtension.BackgroundImageLayout = ImageLayout.Stretch;
+            btn_SaveAsExtension.Enabled = false;
             btn_SaveAsExtension.Location = new Point(341, 112);
             btn_SaveAsExtension.Name = "btn_SaveAsExtension";
             btn_SaveAsExtension.Size = new Size(35, 35);
             btn_SaveAsExtension.TabIndex = 18;
-            tooltip.SetToolTip(btn_SaveAsExtension, "Save locally as Extension");
+            tooltip.SetToolTip(btn_SaveAsExtension, "Save locally Extension and SCE package");
             btn_SaveAsExtension.UseVisualStyleBackColor = true;
             btn_SaveAsExtension.Click += btn_SaveAsExtension_Click;
             // 
@@ -248,6 +250,7 @@
             // 
             btn_DownloadEnvironment1.BackgroundImage = Properties.Resources.DownloadIcon;
             btn_DownloadEnvironment1.BackgroundImageLayout = ImageLayout.Stretch;
+            btn_DownloadEnvironment1.Enabled = false;
             btn_DownloadEnvironment1.Location = new Point(382, 112);
             btn_DownloadEnvironment1.Name = "btn_DownloadEnvironment1";
             btn_DownloadEnvironment1.Size = new Size(35, 35);
@@ -369,9 +372,9 @@
             // dataGridViewTextBoxColumn1
             // 
             dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewTextBoxColumn1.HeaderText = "File name:";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -420,11 +423,20 @@
             tooltip.ReshowDelay = 100;
             tooltip.ToolTipTitle = "Action:";
             // 
+            // lb_Version
+            // 
+            lb_Version.AutoSize = true;
+            lb_Version.Location = new Point(875, 515);
+            lb_Version.Name = "lb_Version";
+            lb_Version.Size = new Size(0, 15);
+            lb_Version.TabIndex = 14;
+            // 
             // DeploymentUtility
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(995, 553);
+            Controls.Add(lb_Version);
             Controls.Add(btn_TransferFile);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -439,6 +451,7 @@
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_EnvironmentFiles2).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -475,5 +488,7 @@
         private Button btn_DownloadEnvironment1;
         private Button btn_SaveAsExtension;
         private ToolTip tooltip;
+        private Label lb_Version;
+   
     }
 }
