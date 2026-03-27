@@ -5,14 +5,14 @@ Prerequisites to run this utility:
 - Windows running .NET 8.0
 - ThingWorx instance allowing connection via AppKey
 
-# How to download it (choose one of the 2 options below):
+# How to get the utility (choose one of the 2 options below):
 1. Download the extension from the Releases section on top of the page, link here for ease of use: [Releases](https://github.com/vrosu/thingworx-deployment-utility/releases).
 2. Install Microsoft Visual Studio Community 2022 (64-bit). This application was created using MS VS Community Version 17.14.29 (March 2026)
    - Download the entirey repository
    - Click on File / Open / Project/Solution
    - Select the ThingWorxDeploymentUtility.sln
-   - Run or modify it like any other C# application
-
+   - Run (or modify it as per your requirements)
+     In version 1.0.1 a Version concept was introduced. To update the version, modify the <Version>x.y.z</Version> from the csproj file.
 
 # Capabilities:
 This utility provides 2 main capabilities:
