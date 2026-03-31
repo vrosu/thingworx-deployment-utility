@@ -487,7 +487,7 @@ namespace ThingWorxDeploymentUtility
 
         private void btn_ImportSCEPackage_Click(object sender, EventArgs e)
         {
-            string str_FileName = dgv_EnvironmentFiles1.SelectedRows[0].Cells[0].Value.ToString();//does not contain path
+            string str_FileName = dgv_EnvironmentFiles2.SelectedRows[0].Cells[0].Value.ToString();//does not contain path
             DialogResult result = MessageBox.Show("The selected SCE package " + str_FileName + " will be imported in environment " + cb_Environment2.SelectedItem.ToString() + ". Are you sure you want to continue?", "WARNING: IMPORTING AN SCE PACKAGE", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
